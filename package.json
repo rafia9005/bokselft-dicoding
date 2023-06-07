@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@hapi/hapi": "^21.3.2",
+    "nodemon": "^2.0.22"
+  },
+  "name": "submisssion-dicoding",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "rafia9005",
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafia9005/bokselft-dicoding.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafia9005/bokselft-dicoding/issues"
+  },
+  "homepage": "https://github.com/rafia9005/bokselft-dicoding#readme",
+  "description": ""
+}

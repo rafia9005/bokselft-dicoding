@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "Malin Kundang",
+    "author": "Rini Kurniasih, dkk",
+    "tahun": "2012",
+    "penerbit": "Dicoding Indonesia"
+  },
+  {
+    "id": 2,
+    "title": "Learning Python",
+    "author": "Dios Kurniawan",
+    "tahun": "2018",
+    "penerbit": "Google"
+  },
+  {
+    "id": 3,
+    "title": "Indah nya indonesia ku",
+    "author": "Hj. Ngatuni",
+    "tahun": "2008",
+    "penerbit": "CV NUSA INDAH"
+  },
+  {
+    "id": 4,
+    "title": "Indah nya Persahabatan",
+    "author": "Widowati",
+    "tahun": "2020",
+    "penerbit": "PT SINERGI KARYA NUSANTARA"
+  },
+  {
+    "id": 5,
+    "title": "EP EP MAX",
+    "author": "ahamd raif",
+    "tahun": "2022",
+    "penerbit": "rapi epep"
+  }
+]
