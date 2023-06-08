@@ -7,8 +7,8 @@
     "penerbit": "Dicoding Indonesia"
   },
   {
-    "id": 2,
-    "title": "Learning Python",
+    "id": "2",
+    "title": "Learning Python Full",
     "author": "Dios Kurniawan",
     "tahun": "2018",
     "penerbit": "Google"
