@@ -28,41 +28,44 @@ const init = async () => {
     host: "localhost",
   });
 
-
-// untuk melihat semua data yang tersimpan
+  // untuk melihat semua data yang tersimpan
   server.route({
     method: "GET",
     path: "/books",
     handler: (request, h) => {
-      return h.response({ success: true, data: books });
+      return h.response({ success: true, data: books, status: "success" });
     },
   });
 
-
-// untuk menambahkan buku
+  // untuk menambahkan buku
   server.route({
     method: "POST",
     path: "/books",
     handler: (request, h) => {
       const { title, author, tahun, penerbit } = request.payload;
+
+      if (!title) {
+        return h.response({ success: false, error: "Book name is required", status: "error" }).code(400);
+      }
+
       const id = books.length + 1;
       const newBook = {
+        bookId: id,
         id,
         title,
         author,
         tahun,
-        penerbit
+        penerbit,
       };
       books.push(newBook);
 
       saveData();
 
-      return h.response({ success: true, data: newBook }).code(201);
+      return h.response({ success: true, data: newBook, status: "success" }).code(201);
     },
   });
 
-
-// untuk menghapus buku dengan method DELETE
+  // untuk menghapus buku dengan method DELETE
   server.route({
     method: "DELETE",
     path: "/books/{id}",
@@ -71,18 +74,16 @@ const init = async () => {
       const index = books.findIndex((book) => book.id == id);
 
       if (index !== -1) {
+        books.splice(index, 1);
         saveData();
-        return h.response({ success: true, message: "DATA BERHASIL DI HAPUS" }).code(200);
+        return h.response({ success: true, message: "DATA BERHASIL DI HAPUS", status: "success" }).code(200);
       } else {
-        return h
-          .response({ success: false, message: "Book not found" })
-          .code(404);
+        return h.response({ success: false, message: "Book not found", status: "error" }).code(404);
       }
     },
   });
 
-
-// untuk mencari buku dengan ID
+  // untuk mencari buku dengan ID
   server.route({
     method: "GET",
     path: "/books/{id}",
@@ -91,14 +92,14 @@ const init = async () => {
       const book = books.find((book) => book.id == id);
 
       if (book) {
-        return h.response({ success: true, data: book }).code(200);
+        return h.response({ success: true, data: book, status: "success" }).code(200);
       } else {
-        return h.response({ success: false, message: "Book not found" }).code(404);
+        return h.response({ success: false, message: "Book not found", status: "error" }).code(404);
       }
     },
   });
 
-// untuk mengedit data buku dengan method PUT
+  // untuk mengedit data buku dengan method PUT
   server.route({
     method: "PUT",
     path: "/books/{id}",
@@ -106,29 +107,38 @@ const init = async () => {
       const { id } = request.params;
       const { title, author, tahun, penerbit } = request.payload;
 
+      if (!title) {
+        return h.response({ success: false, error: "Book name is required", status: "error" }).code(400);
+      }
+
       const index = books.findIndex((book) => book.id == id);
 
       if (index !== -1) {
-        books[index].title = title;
-        books[index].author = author;
-        books[index].tahun = tahun;
-        books[index].penerbit = penerbit;
+        books[index] = {
+          bookId: id,
+          id,
+          title,
+          author,
+          tahun,
+          penerbit,
+        };
+
         saveData();
-        return h.response({ success: true, message: "Book updated successfully" }).code(200);
+        return h.response({ success: true, data: books[index], status: "success" }).code(200);
       } else {
-        return h.response({ success: false, message: "Book not found" }).code(404);
+        return h.response({ success: false, message: "Book not found", status: "error" }).code(404);
       }
     },
   });
-
-
-  loadData();
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
 };
 
-init().catch((err) => {
-  console.error(err);
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled promise rejection:", err);
   process.exit(1);
 });
+
+loadData();
+init();
